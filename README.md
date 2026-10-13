@@ -1,81 +1,60 @@
 # LLM Evaluation & Regression Lab
 
-A small, local-first project for learning one advanced LLMOps capability: **measuring whether a RAG application gets better or worse when its configuration changes**.
+This is the next stage of the original local RAG banking assistant learning journey. The earlier `llmops-learning-lab` remains frozen as the baseline; this repository now brings its RAG code forward so evaluation tests the same approach rather than a separately reimplemented RAG pipeline.
 
-This repository is deliberately separate from `llmops-learning-lab`. It is not a production platform and it does not use an evaluation framework.
+## What this stage adds
 
-## What it does
+- `src/rag_app.py`: the original local RAG flow (character chunks, Ollama embeddings, NumPy cosine similarity, top-K retrieval, Ollama generation).
+- `src/evaluate.py`: calls the shared functions from `rag_app.py` against a fixed test set.
+- `src/compare.py`: compares two saved evaluation reports.
+- `data/banking_policy.md`: the same synthetic policy used in the original baseline.
+- `data/test_cases.json`: six fixed questions and expected outcomes.
+- `reports/`: generated JSON experiment outputs, ignored by Git.
 
-1. Reads a small synthetic banking policy document.
-2. Splits it into heading-aware sections.
-3. Uses Ollama and `all-minilm` to embed sections and questions.
-4. Retrieves the top-K sections using cosine similarity.
-5. Uses `llama3.2:1b` to answer from retrieved context.
-6. Checks whether the expected source section was retrieved.
-7. Checks expected answer facts or appropriate abstention.
-8. Writes a JSON report that can be compared with another run.
+The key continuity rule: **evaluation imports the same chunking, embedding, retrieval, and generation code as the interactive app**. There is no second RAG implementation to learn or maintain.
 
-## Requirements
+## Requirements and setup
 
 - Python 3.10+
 - Ollama running locally
-- Models downloaded:
-  ```bash
-  ollama pull llama3.2:1b
-  ollama pull all-minilm
-  ```
+- Models `llama3.2:1b` and `all-minilm`
 
-## Run locally
+    ollama pull llama3.2:1b
+    ollama pull all-minilm
 
-From the project root, in Ubuntu/WSL:
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python src/evaluate.py --top-k 3 --output reports/top3.json
-```
+## Run the interactive app
 
-Then run a different retrieval configuration:
+    python src/rag_app.py
 
-```bash
-python src/evaluate.py --top-k 1 --output reports/top1.json
-python src/compare.py reports/top3.json reports/top1.json
-```
+Type `exit` to stop.
 
-The model runs locally. No hosted API key is required. Evaluation calls the local models for each test case and may take a few minutes.
+## Run the evaluation experiment
 
-## How to read the results
+First evaluate the current top-K=3 baseline:
 
-- **Retrieval hit rate**: fraction of questions where the expected policy heading appears in retrieved results.
-- **Answer fact pass rate**: fraction of answerable cases where all required fact groups appear in the answer. Each group contains accepted text alternatives.
-- **Abstention pass rate**: fraction of unanswerable cases where the answer says the source does not specify the answer.
-- **Regressions**: test cases that passed a metric in the baseline report but fail it in the candidate report.
+    python src/evaluate.py --top-k 3 --output reports/top3.json
 
-These simple deterministic checks are imperfect proxies for semantic correctness. Wording differences can cause false failures, and expected words can appear in an incorrect answer. Inspect failed cases manually.
+Then evaluate top-K=1:
 
-## Learning experiment
+    python src/evaluate.py --top-k 1 --output reports/top1.json
 
-Run the same test set with `top_k=3` and `top_k=1`. Compare the reports. Did fewer chunks improve retrieval precision but remove needed evidence? Did answer quality change? The goal is to observe and explain the trade-off, not assume one setting is better.
+Compare them:
 
-## Scope boundaries
+    python src/compare.py reports/top3.json reports/top1.json
 
-In scope:
-- A small fixed evaluation dataset
-- Local RAG execution
-- Separate retrieval and answer checks
-- JSON reports
-- Baseline-versus-candidate comparison
+## Understand the metrics
 
-Out of scope for this first version:
-- Vector databases
-- Agents or tool calling
-- Kubernetes or deployment pipelines
-- Hosted model APIs
-- Dashboards and tracing platforms
-- LLM-as-a-judge
-- Large evaluation frameworks
+- **Retrieval hit:** whether the expected policy heading appears in any retrieved chunk.
+- **Answer fact:** whether each required fact group has at least one accepted literal phrase in the answer.
+- **Abstention:** whether an unanswerable question gets an answer indicating the policy does not specify it.
+- **Regression:** a check that passed in the baseline but fails in the candidate.
 
-## Safety note
+These are diagnostic checks, not proof of semantic correctness. A phrase check may fail on a correctly worded answer or pass on a misleading answer. Inspect the retrieved chunk text, model answer, and original policy.
 
-The banking content is fictional and for training only. It is not financial advice.
+## Learning approach
+
+We are adding one concept to the existing RAG knowledge: systematic evaluation. First understand the output and its failure modes; then make one improvement and measure its effect. Do not add vector databases, agents, Kubernetes, dashboards, or hosted APIs yet.
