@@ -1,0 +1,74 @@
+[
+  {
+    "id": "savings_minimum",
+    "question": "What is the minimum balance for a savings account?",
+    "expected_heading": "Savings Account Minimum Balance",
+    "answerable": true,
+    "required_fact_groups": [
+      [
+        "AED 3,000",
+        "3,000 AED"
+      ],
+      [
+        "minimum monthly average balance",
+        "minimum balance"
+      ]
+    ]
+  },
+  {
+    "id": "debit_card_defect",
+    "question": "Is there a replacement fee if the debit card has a confirmed manufacturing defect?",
+    "expected_heading": "Debit Card Replacement",
+    "answerable": true,
+    "required_fact_groups": [
+      [
+        "waive",
+        "waives",
+        "waived",
+        "no replacement fee",
+        "fee is waived"
+      ],
+      [
+        "manufacturing defect"
+      ]
+    ]
+  },
+  {
+    "id": "online_transfer_fee",
+    "question": "What is the fee for an international transfer made through online banking?",
+    "expected_heading": "International Transfer Fees",
+    "answerable": true,
+    "required_fact_groups": [
+      [
+        "AED 15",
+        "15 AED"
+      ],
+      [
+        "intermediary",
+        "recipient-bank",
+        "recipient bank"
+      ]
+    ]
+  },
+  {
+    "id": "fixed_deposit_penalty",
+    "question": "What is the exact universal penalty percentage for early fixed-deposit withdrawal?",
+    "expected_heading": "Fixed Deposit Early Withdrawal",
+    "answerable": false,
+    "required_fact_groups": []
+  },
+  {
+    "id": "loan_guarantee",
+    "question": "Does the policy guarantee loan approval above a particular income threshold?",
+    "expected_heading": "Loan Eligibility",
+    "answerable": false,
+    "required_fact_groups": []
+  },
+  {
+    "id": "crypto_policy",
+    "question": "What is the bank's policy on cryptocurrency investments?",
+    "expected_heading": null,
+    "answerable": false,
+    "required_fact_groups": []
+  }
+]
