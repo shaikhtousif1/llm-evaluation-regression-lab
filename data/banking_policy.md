@@ -12,16 +12,16 @@ A replacement debit card costs AED 25 if the card was lost or damaged by the cus
 
 ## International Transfer Fees
 
-International transfers initiated through online banking cost AED 15 per transfer, excluding intermediary-bank and recipient-bank charges. Transfers initiated at a branch cost AED 30, excluding intermediary-bank and recipient-bank charges.
+International transfers initiated through online banking cost AED 15 per transfer, excluding intermediary-bank and recipient-bank charges. Transfers initiated at a branch cost AED 30, excluding intermediary-bank and recipient-bank charges. The exchange rate shown before confirmation is the rate applied by the bank; intermediary banks may apply separate charges.
 
 ## Fixed Deposit Early Withdrawal
 
-Early withdrawal of a fixed deposit may reduce the interest payable. The applicable reduction depends on the deposit product and the time elapsed. The policy does not define a single universal penalty percentage.
+Early withdrawal of a fixed deposit may reduce the interest payable. The applicable reduction depends on the deposit product and the time elapsed. Customers should review the product's terms or contact the bank before confirming an early withdrawal. The policy does not define a single universal penalty percentage.
 
 ## Disputed Card Transaction
 
-Customers should report an unrecognized card transaction through the bank's official app or customer support channel as soon as possible. A report does not guarantee reimbursement; the bank investigates the transaction and communicates the outcome.
+Customers should report an unrecognized card transaction through the bank's official app or customer support channel as soon as possible. The bank may temporarily block the card while investigating. A report does not guarantee reimbursement; the bank investigates the transaction and communicates the outcome.
 
 ## Loan Eligibility
 
-Loan eligibility depends on verified income, existing obligations, credit history, employment details, and the bank's current lending criteria. This document does not define a guaranteed approval threshold.
+Loan eligibility depends on verified income, existing obligations, credit history, employment details, and the bank's current lending criteria. This document does not define a guaranteed approval threshold. Customers should use the bank's official application process for an eligibility assessment.
